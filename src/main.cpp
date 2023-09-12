@@ -9,21 +9,26 @@ int main(){
         if((idx > 0) && ((idx + 1) % 5 == 0)) cout << endl;
     }
 
-    cout << "Enter Company No.: ";
-    CATCH_ERR(company);
-    cout << "Enter Question No.: ";
-    CATCH_ERR(question);
-    
-    // TODO: Add other companies question
-    switch (company)
-    {
-    case 1:{
-        nvidiaQ q;
-        break;
-    }
-    default:
-        break;
-    }    
+    cout << "\nEnter Company No.: ";
+    CATCH_ERR(company, companiesList.size());
+    cout << endl;
 
+    // TODO: Add other companies question
+    nvidiaQ NvidiaQ;
+    function<void(nvidiaQ*)> nvidiaQList[] = {&nvidiaQ::abs_woBranch};
+
+    switch (company){
+        case COMPANY_NVIDIA:
+            for(int idx = 0; idx < NvidiaQ.funcNameList.size(); idx++){ 
+                cout << idx << ": " << NvidiaQ.funcNameList[idx] << endl;
+            }
+            cout << "Enter Question No.: ";
+            using funcTuple = tuple<void (nvidiaQ::*)()>;
+            CATCH_ERR(question, funcList<funcTuple>::size);
+            nvidiaQList[question](&NvidiaQ);
+            break;
+        default:
+            break;
+    }    
     return 0;
 }
