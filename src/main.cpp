@@ -13,9 +13,9 @@ int main(){
     CATCH_ERR(company, companiesList.size());
     cout << endl;
 
-    // TODO: Add other companies question
+    // TODO: Add other companies question & function pointer
     nvidiaQ NvidiaQ;
-    function<void(nvidiaQ*)> nvidiaQList[] = {&nvidiaQ::abs_woBranch};
+    function<void(nvidiaQ*)> nvidiaQList[] = {&nvidiaQ::debug, &nvidiaQ::abs_woBranch, &nvidiaQ::numOf1Bits};
 
     switch (company){
         case COMPANY_NVIDIA:
@@ -24,7 +24,7 @@ int main(){
             }
             cout << "Enter Question No.: ";
             using funcTuple = tuple<void (nvidiaQ::*)()>;
-            CATCH_ERR(question, funcList<funcTuple>::size);
+            CATCH_ERR(question, NvidiaQ.funcNameList.size());
             nvidiaQList[question](&NvidiaQ);
             break;
         default:
