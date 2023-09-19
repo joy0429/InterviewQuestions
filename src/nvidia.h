@@ -13,9 +13,10 @@ public:
     void abs_woBranch();
     void numOf1Bits();
     void memAlignMallocFree();
+    void memCpy();
     ~nvidiaQ();
 
-    vector<string> funcNameList = {"debug", "abs_woBranch", "numOf1Bits", "memAlignMallocFree"};
+    vector<string> funcNameList = {"debug", "abs_woBranch", "numOf1Bits", "memAlignMallocFree", "memCpy"};
 };
 
 struct record{
@@ -29,6 +30,7 @@ public:
     memoryCtrl();
     void* myMalloc(size_t size);
     void myFree(void *ptr);
+    void myMemCpy(void *dest, const void *src, size_t count);
     ~memoryCtrl();
 
     char memoryPool[1024];

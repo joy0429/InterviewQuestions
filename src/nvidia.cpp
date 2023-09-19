@@ -92,6 +92,9 @@ void nvidiaQ :: numOf1Bits(){
  *                malloc. If yes, create & update record; otherwise return NULL pointer.
  *             4. When free the space, the free tag of this record change to valid, and move
  *                the remaing space together to prevent from fragmentation.
+ *          Time Complexity:    O(n), n: num of record
+ *          Space Complexity:   O(n)
+ * @related #memory
 ******************************************************************************************/
 memoryCtrl:: memoryCtrl(){
     this -> freeList -> size = sizeof(memoryPool);
@@ -170,6 +173,59 @@ void nvidiaQ :: memAlignMallocFree(){
 
 memoryCtrl:: ~memoryCtrl(){
 
+}
+
+/******************************************************************************************
+ * @brief   Q. Memcpy implementation
+ * @details A. Using 2 pointers of char array to copy string from source to destinate. When
+ *             copying char, we have to check the copy direction due to the case of over-
+ *             lapping memory.
+ * @note    Q. Why don't we copy source to a non-overlapping space directly?
+ *          A. 1. Increase complexity
+ *                It would increase the design complexity of memcpy to avoid overlapping.
+ *             2. Lower performance
+ *                In many cases, the memory of source & destinate wouldn't overlap. If we 
+ *                implement an avoid overlapping function in memcpy, it would waste time.
+ *             3. Consistency
+ *                Programmer don't need to consider the special case, and it is easily
+ *                maintain & understad the code.
+ *             4. Tolerance
+ *                It doesn't need other checking function when handling the case that 
+ *                memory are overlapped such as calculating of graphic, etc.
+ * @example case 1(copy from begin)     case 2(copy from last)
+ *          addr. 0, 1, 2, 3            addr. 0  1  2  3  4
+ *          src  [a, b, c, d]           src  [a, b, c, d]
+ *          dest    [b, c]              dest    [b, c]
+ *                    |                            |
+ *                    V                            V
+ *          dest [a, b, c, d]           dest    [a, b, c, d]
+ * 
+ *          Time Complexity:    O(n), n: length of string
+ *          Space Complexity:   O(n)
+ * @related #memory
+******************************************************************************************/
+void myMemCpy(void* dest, const void* src, size_t count) {
+    char* destChar = static_cast<char*>(dest);
+    const char* srcChar = static_cast<const char*>(src);
+
+    if (destChar < srcChar) {
+        for (size_t i = 0; i < count; i++) {
+            destChar[i] = srcChar[i];
+        }
+    } else if (destChar > srcChar) {
+        for (size_t i = count - 1; i >= 0; i--) {
+            destChar[i] = srcChar[i];
+        }
+    }
+}
+
+void nvidiaQ :: memCpy() {
+    char source[1024], copy[1024];
+
+    cout << "String: ";
+    cin >> source;
+    myMemCpy(copy, source, 1024);
+    cout << "Copied: " << copy << endl;
 }
 
 nvidiaQ :: ~nvidiaQ(){
