@@ -228,6 +228,89 @@ void nvidiaQ :: memCpy() {
     cout << "Copied: " << copy << endl;
 }
 
+/******************************************************************************************
+ * @brief   Q. Check if the binary tree is valid
+ * @details A. Using DFS to check the value of (sub)tree's root is bigger then the left
+ *             subtree & smaller than the right subtree
+ *          Time Complexity:    O(logn), n: num of nodes
+ *          Space Complexity:   O(n)
+ * @ref     Leetcode 98. Validate Binary Search Tree
+ * @related #binary tree #DFS
+*****************************************************************************************/
+bool nvidiaQ :: isValidBST(tree *root, tree *min, tree *max){
+    if(!root) return true;
+    if((min && (root -> val <= min -> val)) || (max && (root -> val >= max -> val))) return false;
+    return isValidBST(root -> left, min, root) && isValidBST(root -> right, root, max);
+}
+
+void nvidiaQ :: checkValidBT(){
+    // case 1
+    tree *root1 = new tree(2);
+    root1 -> left = new tree(1);
+    root1 -> right = new tree(3);
+    cout << "case 1: " << (isValidBST(root1, NULL, NULL)? "pass" : "fail") << endl;
+
+    // case 2
+    tree *root2 = new tree(5);
+    root2 -> left = new tree(1);
+    root2 -> right = new tree(4);
+    root2 -> right -> left = new tree(3);
+    root2 -> right -> right = new tree(6);
+
+    cout << "case 2: " << (isValidBST(root2, NULL, NULL)? "pass"  : "fail") << endl;
+}
+/******************************************************************************************
+ * @brief   Q. Reverse part of linked list by input numbers
+ * @details A. Find the node "prev" before the swap part. Then swap each node "now" with
+ *             its next node "next" in order(remember link "now" back to the node after swap
+ *             part, and link "next" back to "prev")
+ *          Time Complexity:    O(n), n: length of linked list should be reversed
+ *          Space Complexity:   O(1)
+ * @ref     Leetcode 206. Reverse Linked List(similar)
+ * @related #linked list #2 pointers
+******************************************************************************************/
+linkedList* nvidiaQ :: reverseList(linkedList *head, int start, int end){
+    if(!head || start == end) return NULL;
+
+    // Create a dummy node to prevent from reverse from head
+    linkedList *dummy = new linkedList(INT_MAX);
+    dummy -> next = head;
+
+    // Find & record the head before reversed part
+    linkedList *prev = dummy;
+    for(int i = 1; i < start; i++) prev = prev -> next;
+
+    // Swap value by now & next, and link prev to the next
+    linkedList *now = prev -> next, *next;
+    for(int i = start; i < end; i++){
+        next = now -> next;
+        now -> next = next -> next;
+        next -> next = prev -> next;
+        prev -> next = next;
+    }
+    return dummy -> next;
+}
+
+void nvidiaQ :: reverseListResult(){
+    linkedList *head = new linkedList(1);
+    head -> next = new linkedList(2);
+    head -> next -> next = new linkedList(3);
+    head -> next -> next -> next = new linkedList(4);
+    head -> next -> next -> next -> next = new linkedList(5);
+
+    cout << "Orig. linked list: [1->2->3->4->5]" << endl;
+    cout << "Reverse loc: 2~4" << endl;
+
+    linkedList *newHead = reverseList(head, 2, 4);
+
+    cout << "After reverse: [";
+    while(newHead){
+        cout << newHead -> val << "->";
+        newHead = newHead -> next;
+    }
+    cout << "]" << endl;
+}
+
 nvidiaQ :: ~nvidiaQ(){
     
 }
