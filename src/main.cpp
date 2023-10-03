@@ -15,10 +15,10 @@ int main(){
 
     // TODO: Add other companies question & function pointer
     nvidiaQ NvidiaQ;
-    function<void(nvidiaQ*)> nvidiaQList[] = {&nvidiaQ::debug,      &nvidiaQ::abs_woBranch, 
-                                              &nvidiaQ::numOf1Bits, &nvidiaQ::memAlignMallocFree, 
-                                              &nvidiaQ::memCpy,     &nvidiaQ::checkValidBT,
-                                              &nvidiaQ::reverseListResult};
+    function<void(nvidiaQ*)> nvidiaQList[] = {&nvidiaQ::debug,              &nvidiaQ::abs_woBranch, 
+                                              &nvidiaQ::numOf1Bits,         &nvidiaQ::memAlignMallocFree, 
+                                              &nvidiaQ::memCpy,             &nvidiaQ::checkValidBT,
+                                              &nvidiaQ::reverseListResult,  &nvidiaQ::parallelProcess};
 
     switch (company){
         case COMPANY_NVIDIA:

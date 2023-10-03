@@ -6,6 +6,11 @@
         "utility": "cpp",
         "iostream": "cpp",
         "ostream": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "map": "cpp"
     }
 }

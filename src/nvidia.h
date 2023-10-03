@@ -1,8 +1,10 @@
+#include <algorithm>
 #include <bitset>
 #include <cassert>
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
@@ -33,10 +35,12 @@ public:
     bool isValidBST(tree *root, tree *min, tree *max);
     void reverseListResult();
     linkedList* reverseList(linkedList *head, int start, int end);
+    int shortestTime(vector<int> &tasks, vector<int> &types);
+    void parallelProcess();
     ~nvidiaQ();
 
     vector<string> funcNameList = {"debug", "abs_woBranch", "numOf1Bits", "memAlignMallocFree", "memCpy",
-                                   "checkValidBT", "reverseListResult"};
+                                   "checkValidBT", "reverseListResult", "parallelProcess"};
 };
 
 struct record{

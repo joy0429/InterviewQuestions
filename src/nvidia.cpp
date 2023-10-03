@@ -311,6 +311,45 @@ void nvidiaQ :: reverseListResult(){
     cout << "]" << endl;
 }
 
+/******************************************************************************************
+ * @brief   Q. There are some tasks, each of which is of different types and takes up some 
+ *          memory spaces. Assume each tasks only takes 1 sec. The OS can only run "2" same
+ *          type of tasks at the same time, and it only has 10 MB spaces. Return the shortest
+ *          time that all the tasks can be finished.
+ * @details Using map to record task detail in each types. And task detail record the usage
+ *          of memory of each tasks. Then checking each type and finding the tasks by two 
+ *          pointers that can be run at the same time.
+ * @related #2 pointers #unordered map
+******************************************************************************************/
+int nvidiaQ :: shortestTime(vector<int> &tasks, vector<int> &types){
+    int times = 0;
+    unordered_map<int, vector<int>> map;
+
+    for(int idx = 0; idx < tasks.size(); idx++) map[types[idx]].push_back(tasks[idx]);
+
+    for(auto type : map)
+    {
+        int start = 0, end = type.second.size() - 1;
+        sort(type.second.begin(), type.second.end());
+
+        while(start < end){
+            int sum = type.second[start] + type.second[end];
+            if(sum > 10) end--;
+            else if(sum < 10) start++;
+            else start++, end--;
+            times++;
+        }
+        if(start <= end) times++;
+    }
+    return times;
+}
+
+void nvidiaQ :: parallelProcess(){
+    vector<int> tasks = {7, 2, 3, 9},
+                types = {1, 2, 1, 3};
+    cout << "Shortest Time(sec.): " << shortestTime(tasks, types) << endl;
+}
+
 nvidiaQ :: ~nvidiaQ(){
     
 }
