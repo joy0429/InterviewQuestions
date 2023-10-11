@@ -319,6 +319,8 @@ void nvidiaQ :: reverseListResult(){
  * @details Using map to record task detail in each types. And task detail record the usage
  *          of memory of each tasks. Then checking each type and finding the tasks by two 
  *          pointers that can be run at the same time.
+ *          Time Complexity:    O(n), n: length of linked list should be reversed
+ *          Space Complexity:   O(1)
  * @related #2 pointers #unordered map
 ******************************************************************************************/
 int nvidiaQ :: shortestTime(vector<int> &tasks, vector<int> &types){
@@ -348,6 +350,174 @@ void nvidiaQ :: parallelProcess(){
     vector<int> tasks = {7, 2, 3, 9},
                 types = {1, 2, 1, 3};
     cout << "Shortest Time(sec.): " << shortestTime(tasks, types) << endl;
+}
+
+/*******************************************************************************************
+ * @brief   Q. Write a spped optimized function that for a given aray of valuse const char
+ *          s[65536]. Count how many times each of the characters 'N', 'V', 'D',  'I', 'A'
+ *          were used(seperately).
+ * @details Using unordered map to record the appear times of all the characters(It may
+ *          cause some problems if using if-condition to record only 'N', 'V', 'D',  'I',
+ *          'A' in multiprocessing condition)
+ *          Time Complexity:    O(n), n: size of const char s
+ *          Space Complexity:   O(n)
+ * @related #unordered map
+*******************************************************************************************/
+void nvidiaQ :: countCharTimes(const char *s, int size){
+    unordered_map<char, int> record;
+    for(int index = 0; index < size; index++) record[s[index]]++;
+    for(auto rec : record) cout << rec.first << ": " << rec.second << endl;
+}
+
+void nvidiaQ :: showEachChar(){
+    const char s[65536] = "NVIDIANVIDIANVIDIAGOGOGOGOGO";
+    cout << "Input string: " << s << endl;
+    countCharTimes(s, sizeof(s));
+}
+
+/*******************************************************************************************
+ * @brief   Q. Write a function that returns the nth element from the end of a linked list.
+ *          For augment value n = 0 function should return the last element of the linked
+ *          list.
+ * @details
+ * @ref     Leetcode 19. Removed nth node from end of list(similar)
+ * @related #2 pointers #linked list
+*******************************************************************************************/
+int nvidiaQ :: findNthElement(linkedList *head, int n){
+    linkedList *p = head, *q = head;
+    while(--n > 0) p = p -> next;
+    while(p && p -> next){
+        p = p -> next;
+        q = q -> next;
+    }
+    return q -> val;
+}
+
+void nvidiaQ :: showNthElement(){
+    int n = 0;
+    linkedList *head = new linkedList(1);
+    head -> next = new linkedList(2);
+    head -> next -> next = new linkedList(3);
+    head -> next -> next -> next = new linkedList(4);
+    head -> next -> next -> next -> next = new linkedList(5);
+
+    cout << "Linked list: [1->2->3->4->5]" << endl;
+    cout << "Input n-th: ";
+    cin >> n;
+    cout << "Nth value: " << findNthElement(head, n) << endl;
+}
+
+/*******************************************************************************************
+ * @brief   Q. Given an array of strings strs, group the anagrams together. You can return 
+ *          the answer in any order.
+ * @example - Example 1:
+                Input: strs = ["eat","tea","tan","ate","nat","bat"]
+                Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+            - Example 2:
+                Input: strs = [""]
+                Output: [[""]]
+            - Example 3:
+                Input: strs = ["a"]
+                Output: [["a"]]
+ * @details Using a map to record all the string that is the same after sorting
+ * @related Leetcode 49. Group Anagram
+ * @ref     #string #array #hash table #sorting
+*******************************************************************************************/
+vector<vector<string>> nvidiaQ :: groupAnagrams(vector<string> &strs){
+    unordered_map<string, vector<string>> map;
+    vector<vector<string>> res;
+    for(auto s : strs){
+        string sortS = s;
+        sort(sortS.begin(), sortS.end());
+        map[sortS].push_back(s);
+    }
+    for(auto m : map) res.push_back(m.second);
+    return res;
+}
+
+void nvidiaQ :: anagramResult(){
+    vector<string> example1 = {"eat","tea","tan","ate","nat","bat"},
+                   example2 = {""},
+                   example3 = {"a"};
+
+    cout << "Example1: [eat,tea,tan,ate,nat,bat]" << endl;
+    cout << "[";
+    for(auto anagram : groupAnagrams(example1)){
+        cout << "[";
+        for(auto str : anagram) cout << str << ",";
+        cout << "]" << endl;
+    }
+    cout << "]" << endl;
+
+    cout << "Example2: []" << endl;
+    cout << "[";
+    for(auto anagram : groupAnagrams(example2)){
+        cout << "[";
+        for(auto str : anagram) cout << str << ",";
+        cout << "]" << endl;
+    }
+    cout << "]" << endl;
+
+    cout << "Example3: [a]" << endl;
+    cout << "[";
+    for(auto anagram : groupAnagrams(example3)){
+        cout << "[";
+        for(auto str : anagram) cout << str << ",";
+        cout << "]" << endl;
+    }
+    cout << "]" << endl;
+}
+
+/*******************************************************************************************
+ * @brief   Q. Design a set_clock, get_clock with alarm 
+ * @related #system clock
+********************************************************************************************/
+void nvidiaQ :: setClock(int year, int month, int day, int hour, int minute, int second) {
+    SYSTEMTIME new_time;
+    new_time.wYear          = static_cast<WORD>(year);
+    new_time.wMonth         = static_cast<WORD>(month);
+    new_time.wDay           = static_cast<WORD>(day);
+    new_time.wHour          = static_cast<WORD>(hour);
+    new_time.wMinute        = static_cast<WORD>(minute);
+    new_time.wSecond        = static_cast<WORD>(second);
+
+    if (!SetSystemTime(&new_time)) cerr << "SETTING SYS CLOCK FAIL" << endl;
+}
+
+void nvidiaQ :: getClock() {
+    SYSTEMTIME current_time;
+    GetSystemTime(&current_time);
+
+    std::cout << "Now Sys. Clock: " << current_time.wYear << "-"
+              << current_time.wMonth << "-" << current_time.wDay << " "
+              << current_time.wHour << ":" << current_time.wMinute << ":"
+              << current_time.wSecond << std::endl;
+}
+
+void nvidiaQ :: setAlarm(int seconds) {
+    HANDLE timer;
+    LARGE_INTEGER due_time;
+    due_time.QuadPart = -static_cast<LONGLONG>(seconds) * 10000000LL; // Change to 100ns
+
+    timer = CreateWaitableTimer(NULL, TRUE, NULL);
+    SetWaitableTimer(timer, &due_time, 0, NULL, NULL, FALSE);
+
+    WaitForSingleObject(timer, INFINITE);
+    cout << "TimesUP!" << endl;
+    CloseHandle(timer);
+}
+
+void nvidiaQ :: sysClock() {
+    int year, month, day, hour, minute, second, alarm;
+
+    cout << "Set alarm(sec.): ";
+    cin >> alarm;
+    setAlarm(alarm);
+
+    cout << "Input sys time(UTC)[year,month,day,hour,minute,second]:";
+    cin >> year >> month >> day >> hour >> minute >> second;
+    setClock(year, month, day, hour, minute, second);
+    getClock();
 }
 
 nvidiaQ :: ~nvidiaQ(){

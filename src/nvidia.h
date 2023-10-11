@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <unordered_map>
 #include <vector>
+#include <windows.h>
+
 using namespace std;
 
 struct tree{
@@ -37,10 +39,22 @@ public:
     linkedList* reverseList(linkedList *head, int start, int end);
     int shortestTime(vector<int> &tasks, vector<int> &types);
     void parallelProcess();
+    void countCharTimes(const char *s, int size);
+    void showEachChar();
+    int findNthElement(linkedList *head, int n);
+    void showNthElement();
+    vector<vector<string>> groupAnagrams(vector<string> &strs);
+    void anagramResult();
+    void setClock(int year, int month, int day, int hour, int minute, int second);
+    void getClock();
+    void setAlarm(int seconds);
+    void sysClock();
+    
     ~nvidiaQ();
 
     vector<string> funcNameList = {"debug", "abs_woBranch", "numOf1Bits", "memAlignMallocFree", "memCpy",
-                                   "checkValidBT", "reverseListResult", "parallelProcess"};
+                                   "checkValidBT", "reverseListResult", "parallelProcess", "showEachChar",
+                                   "showNthElement", "anagramResult", "sysClock"};
 };
 
 struct record{

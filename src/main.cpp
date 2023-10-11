@@ -18,7 +18,9 @@ int main(){
     function<void(nvidiaQ*)> nvidiaQList[] = {&nvidiaQ::debug,              &nvidiaQ::abs_woBranch, 
                                               &nvidiaQ::numOf1Bits,         &nvidiaQ::memAlignMallocFree, 
                                               &nvidiaQ::memCpy,             &nvidiaQ::checkValidBT,
-                                              &nvidiaQ::reverseListResult,  &nvidiaQ::parallelProcess};
+                                              &nvidiaQ::reverseListResult,  &nvidiaQ::parallelProcess,
+                                              &nvidiaQ::showEachChar,       &nvidiaQ::showNthElement,
+                                              &nvidiaQ::anagramResult,      &nvidiaQ::sysClock};
 
     switch (company){
         case COMPANY_NVIDIA:
