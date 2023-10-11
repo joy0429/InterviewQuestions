@@ -2,13 +2,12 @@
 #include <functional>
 #include <iostream>
 #include <tuple>
-#include <vector>
 #include "nvidia.h"
 
-#define CATCH_ERR(val){                                 \
+#define CATCH_ERR(val, size){                           \
     try{                                                \
         cin >> val;                                     \
-        if((val < 0) || (val >= companiesList.size()))  \
+        if((val < 0) || (val >= size))                  \
             throw "Invalid input";                      \
     }                                                   \
     catch(const char* msg){                             \
@@ -17,7 +16,19 @@
     }                                                   \
 }                                                       \
 
-vector<string> companiesList {"COMPAL", "DELTA ", "MOXA  ", "NXP   ", "NVIDIA", "PHISON"};
+// TODO: Add other companies' name
+vector<string> companiesList {"COMPAL", "DELTA ", "MOXA  ", "NXP   ", "NVIDIA", 
+                              "PHISON"};
+
+typedef enum{
+    COMPANY_COMPAL,
+    COMPANY_DELTA,
+    COMPANY_MOXA,
+    COMPANY_NXP,
+    COMPANY_NVIDIA,
+    COMPANY_PHISON,
+    COMPANY_MAX
+}companyList_t;
 
 template <typename T>
 struct funcList;
