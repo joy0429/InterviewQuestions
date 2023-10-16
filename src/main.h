@@ -2,6 +2,7 @@
 #include <functional>
 #include <iostream>
 #include <tuple>
+#include "arcadyan.h"
 #include "nvidia.h"
 
 #define CATCH_ERR(val, size){                           \
@@ -17,10 +18,11 @@
 }                                                       \
 
 // TODO: Add other companies' name
-vector<string> companiesList {"COMPAL", "DELTA ", "MOXA  ", "NXP   ", "NVIDIA", 
+vector<string> companiesList {"ARCADYAN", "COMPAL", "DELTA ", "MOXA  ", "NXP   ", "NVIDIA", 
                               "PHISON"};
 
 typedef enum{
+    COMPANY_ARCADYAN,
     COMPANY_COMPAL,
     COMPANY_DELTA,
     COMPANY_MOXA,
